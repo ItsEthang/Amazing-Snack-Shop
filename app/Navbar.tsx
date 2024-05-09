@@ -1,11 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { GiChipsBag } from "react-icons/gi";
+import classNames from "classnames";
 
 const Navbar = () => {
   const links = [
     { label: "Home", href: "/" },
     { label: "Snacks", href: "/snacks" },
   ];
+
+  const activePath = usePathname();
 
   return (
     <nav className="flex space-x-6 border-b-2 mb-5 px-4 h-16 items-center">
@@ -18,7 +24,11 @@ const Navbar = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="text-zinc-500 hover:text-zinc-900 transition-colors"
+              className={classNames({
+                "text-zinc-900": link.href === activePath,
+                "text-zinc-500": link.href !== activePath,
+                "hover:text-zinc-800 transition-colors": true,
+              })}
             >
               {link.label}
             </Link>
