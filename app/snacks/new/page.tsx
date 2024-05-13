@@ -4,7 +4,7 @@ import { TextField, Flex, Box, TextArea, Button } from "@radix-ui/themes";
 const NewSnackPage = () => {
   return (
     <>
-      <div className="max-w-xl space-y-3">
+      <div className="max-w-xl space-y-5">
         <Box maxWidth="400px">
           <TextField.Root placeholder="Name of the snack"></TextField.Root>
         </Box>
