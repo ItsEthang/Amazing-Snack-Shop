@@ -1,7 +1,8 @@
 import React from "react";
+import { Button } from "@radix-ui/themes";
 
 const SnacksPage = () => {
-  return <div>SnacksPage</div>;
+  return <Button>Add Snack</Button>;
 };
 
 export default SnacksPage;
