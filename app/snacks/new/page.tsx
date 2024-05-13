@@ -1,5 +1,7 @@
-"Use Client";
-import { TextField, Flex, Box, TextArea, Button } from "@radix-ui/themes";
+"use client";
+import { TextField, Box, TextArea, Button } from "@radix-ui/themes";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 const NewSnackPage = () => {
   return (
@@ -12,7 +14,7 @@ const NewSnackPage = () => {
           <TextField.Root placeholder="URL of the snack's image"></TextField.Root>
         </Box>
         <Box>
-          <TextArea size="3" placeholder="Snack Description" />
+          <SimpleMDE />
         </Box>
         <Box maxWidth="200px">
           <TextField.Root placeholder="$Price"></TextField.Root>

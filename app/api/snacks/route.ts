@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import prisma from "@/prisma/client";
 
+//Validation schema
 const createSnackSchema = z.object({
   image: z.string().url({ message: "Invalid url" }).max(2048),
   name: z
@@ -12,6 +13,7 @@ const createSnackSchema = z.object({
   price: z.number().nonnegative({ message: "Price cannot be negative!" }),
 });
 
+//Add new snack
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const validation = createSnackSchema.safeParse(body);
