@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Snack` MODIFY `image` VARCHAR(2048) NOT NULL;

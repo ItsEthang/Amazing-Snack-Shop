@@ -12,3 +12,13 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Snack {
+  id          Int      @id @default(autoincrement())
+  image       String   @db.VarChar(2048)
+  name        String   @db.VarChar(255)
+  description String   @db.Text
+  price       Decimal  @db.Decimal(10, 2)
+  quantity    Int      @default(0)
+  addedOn     DateTime @default(now())
+}
