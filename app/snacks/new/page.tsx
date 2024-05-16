@@ -1,14 +1,15 @@
 "use client";
-import { Box, Button, Callout, TextField, Text } from "@radix-ui/themes";
+import ErrorMessage from "@/app/components/ErrorMessage";
+import { createSnackSchema } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import SimpleMDE from "react-simplemde-editor";
 import { BsInfoCircle } from "react-icons/bs";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createSnackSchema } from "@/app/validationSchemas";
+import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
 //The shape of the form
 
@@ -60,18 +61,14 @@ const NewSnackPage = () => {
             placeholder="Name of the snack"
             {...register("name")}
           ></TextField.Root>
-          {errors.name?.message && (
-            <Text color="red">{errors.name.message}</Text>
-          )}
+          <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </Box>
         <Box>
           <TextField.Root
             placeholder="URL of the snack's image"
             {...register("image")}
           ></TextField.Root>
-          {errors.image?.message && (
-            <Text color="red">{errors.image.message}</Text>
-          )}
+          <ErrorMessage>{errors.image?.message}</ErrorMessage>
         </Box>
         <Box>
           <Controller
@@ -79,18 +76,14 @@ const NewSnackPage = () => {
             control={control}
             render={({ field }) => <SimpleMDE {...field} />}
           />
-          {errors.description?.message && (
-            <Text color="red">{errors.description.message}</Text>
-          )}
+          <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </Box>
         <Box maxWidth="200px">
           <TextField.Root
             placeholder="$Price"
-            {...(register("price"), { valueAsNumber: true })}
+            {...register("price", { valueAsNumber: true })}
           ></TextField.Root>
-          {errors.price?.message && (
-            <Text color="red">{errors.price.message}</Text>
-          )}
+          <ErrorMessage>{errors.price?.message}</ErrorMessage>
         </Box>
         <Button size="2" type="submit">
           Add This Snack!
