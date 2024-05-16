@@ -2,7 +2,7 @@
 import ErrorMessage from "@/app/components/ErrorMessage";
 import { createSnackSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Callout, TextField } from "@radix-ui/themes";
+import { Box, Button, Callout, TextField, Spinner } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
@@ -35,13 +35,16 @@ const NewSnackPage = () => {
     resolver: zodResolver(createSnackSchema),
   });
   const [error, setError] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const onSubmit: SubmitHandler<SnackForm> = async (data) => {
     try {
+      setSubmitting(true);
       await axios.post("/api/snacks", data);
       router.push("/snacks");
     } catch (error) {
       setError("Due to an error, this snack cannot be added :(");
+      setSubmitting(false);
     }
   };
 
@@ -85,7 +88,7 @@ const NewSnackPage = () => {
           ></TextField.Root>
           <ErrorMessage>{errors.price?.message}</ErrorMessage>
         </Box>
-        <Button size="2" type="submit">
+        <Button size="2" type="submit" loading={isSubmitting}>
           Add This Snack!
         </Button>
       </form>
