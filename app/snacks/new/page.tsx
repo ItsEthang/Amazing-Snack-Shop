@@ -1,11 +1,12 @@
 "use client";
-import { TextField, Box, Button } from "@radix-ui/themes";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import SimpleMDE from "react-simplemde-editor";
+import { Box, Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
-
+import { useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
+import { BsInfoCircle } from "react-icons/bs";
 //The shape of the form
 interface SnackForm {
   name: string;
@@ -17,24 +18,30 @@ interface SnackForm {
 const NewSnackPage = () => {
   //router is for redirecting etc.
   const router = useRouter();
+  //React hook form for form submission shenanigans
   const { control, register, handleSubmit } = useForm<SnackForm>();
+  const [error, setError] = useState("");
+
   const onSubmit: SubmitHandler<SnackForm> = async (data) => {
-    await axios
-      .post("/api/snacks", { ...data, price: +data.price })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        router.push("/snacks");
-      });
+    try {
+      await axios.post("/api/snacks", { ...data, price: +data.price });
+      router.push("/snacks");
+    } catch (error) {
+      setError("Due to an error, this snack cannot be added :(");
+    }
   };
 
   return (
-    <>
-      <form className="max-w-xl space-y-5" onSubmit={handleSubmit(onSubmit)}>
+    <div className="max-w-xl">
+      {error && (
+        <Callout.Root color="red" className="mb-5">
+          <Callout.Icon>
+            <BsInfoCircle />
+          </Callout.Icon>
+          <Callout.Text>{error}</Callout.Text>
+        </Callout.Root>
+      )}
+      <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
         <Box maxWidth="400px">
           <TextField.Root
             placeholder="Name of the snack"
@@ -64,7 +71,7 @@ const NewSnackPage = () => {
           Add This Snack!
         </Button>
       </form>
-    </>
+    </div>
   );
 };
 
