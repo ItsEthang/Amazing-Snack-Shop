@@ -1,17 +1,14 @@
-import React from "react";
-import { Button, Flex, Grid, Text } from "@radix-ui/themes";
-import Link from "next/link";
 import prisma from "@/prisma/client";
+import { Flex, Grid, Text } from "@radix-ui/themes";
 import SnackStockBadge from "../components/SnackStockBadge";
+import SnackToolBar from "./SnackToolBar";
 
 const SnacksPage = async () => {
   const snacks = await prisma.snack.findMany();
 
   return (
-    <>
-      <Button>
-        <Link href="/snacks/new">Add Snack</Link>
-      </Button>
+    <div>
+      <SnackToolBar />
       <Grid columns={{ initial: "1", md: "3", lg: "5" }} gap="5">
         {snacks.map((snack) => (
           <Flex
@@ -36,7 +33,7 @@ const SnacksPage = async () => {
           </Flex>
         ))}
       </Grid>
-    </>
+    </div>
   );
 };
 
