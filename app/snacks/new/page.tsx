@@ -9,10 +9,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { BsInfoCircle } from "react-icons/bs";
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic";
 import { z } from "zod";
-//The shape of the form
 
+//SimpleMDE is a client component that uses browser API, which is not available on the server.
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
+
+//The shape of the form
 // interface SnackForm {
 //   name: string;
 //   image: string;
