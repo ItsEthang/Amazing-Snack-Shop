@@ -1,8 +1,7 @@
-import SnackStockBadge from "@/app/components/SnackStockBadge";
+import { AddToCart, SnackStockBadge } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-import AddToCart from "@/app/components/AddToCart";
 import ReactMarkdown from "react-markdown";
 
 interface Props {

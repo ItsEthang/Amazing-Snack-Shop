@@ -1,9 +1,8 @@
+import { AddToCart, SnackStockBadge } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Box, Flex, Grid, Text } from "@radix-ui/themes";
-import SnackStockBadge from "../components/SnackStockBadge";
-import SnackToolBar from "./SnackToolBar";
 import Link from "next/link";
-import AddToCart from "../components/AddToCart";
+import SnackToolBar from "./SnackToolBar";
 
 const SnacksPage = async () => {
   const snacks = await prisma.snack.findMany();

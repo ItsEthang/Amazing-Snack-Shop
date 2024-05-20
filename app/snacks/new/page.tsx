@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { BsInfoCircle } from "react-icons/bs";
-import dynamic from "next/dynamic";
 import { z } from "zod";
 
 //SimpleMDE is a client component that uses browser API, which is not available on the server.
