@@ -1,8 +1,9 @@
 import SnackStockBadge from "@/app/components/SnackStockBadge";
 import prisma from "@/prisma/client";
-import { Box, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import AddToCart from "@/app/components/AddToCart";
+import ReactMarkdown from "react-markdown";
 
 interface Props {
   params: {
@@ -38,7 +39,7 @@ const SnackDetailsPage = async ({ params }: Props) => {
         <Text as="div">$ {+snack.price}</Text>
         <AddToCart />
       </Flex>
-      <Text as="p">{snack.description}</Text>
+      <ReactMarkdown className="prose">{snack.description}</ReactMarkdown>
     </Grid>
   );
 };
