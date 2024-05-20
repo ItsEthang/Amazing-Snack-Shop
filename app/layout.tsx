@@ -1,4 +1,4 @@
-import { Theme } from "@radix-ui/themes";
+import { Container, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import type { Metadata } from "next";
@@ -26,7 +26,9 @@ export default function RootLayout({
       <body className={glory.className}>
         <Theme accentColor="tomato" grayColor="olive">
           <Navbar />
-          <main className="p-5">{children}</main>
+          <Container size="4">
+            <main className="p-5">{children}</main>
+          </Container>
         </Theme>
       </body>
     </html>

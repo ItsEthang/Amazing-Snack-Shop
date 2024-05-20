@@ -3,6 +3,7 @@ import { Flex, Grid, Text } from "@radix-ui/themes";
 import SnackStockBadge from "../components/SnackStockBadge";
 import SnackToolBar from "./SnackToolBar";
 import Link from "next/link";
+import AddToCart from "../components/AddToCart";
 
 const SnacksPage = async () => {
   const snacks = await prisma.snack.findMany();
@@ -31,6 +32,7 @@ const SnacksPage = async () => {
                 <Text as="div">Price: </Text>
                 <Text as="div">${+snack.price}</Text>
               </Flex>
+              <AddToCart />
             </Flex>
           </Link>
         ))}
