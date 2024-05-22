@@ -1,9 +1,10 @@
 import { AddToCart, SnackStockBadge } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Box, Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-
+import { LuPencilLine } from "react-icons/lu";
+import Link from "next/link";
 interface Props {
   params: {
     id: string;
@@ -22,24 +23,33 @@ const SnackDetailsPage = async ({ params }: Props) => {
   if (!snack) notFound();
 
   return (
-    <Grid gap="5" columns="1">
-      <Flex align="center" justify="between">
+    <Flex gap="5" direction="column">
+      <Flex align="center" gap="3">
         <Heading as="h1">{snack.name}</Heading>
         <SnackStockBadge quantity={snack.quantity} />
       </Flex>
-      <Card>
-        <img
-          src={snack.image}
-          alt={snack.name}
-          className="object-cover rounded-lg"
-        />
-      </Card>
-      <Flex align="center" justify="between">
-        <Text as="div">$ {+snack.price}</Text>
-        <AddToCart />
-      </Flex>
-      <ReactMarkdown className="prose">{snack.description}</ReactMarkdown>
-    </Grid>
+      <Grid columns={{ initial: "1", sm: "2" }}>
+        <Box>
+          <img
+            src={snack.image}
+            alt={snack.name}
+            className="object-cover rounded-lg"
+          />
+        </Box>
+        <Flex direction="column" align="center" gap="3" justify="center">
+          <ReactMarkdown className="prose">{snack.description}</ReactMarkdown>
+          <Flex align="center" justify="between">
+            <Text as="div">Price:</Text>
+            <Text as="div">$ {+snack.price}</Text>
+          </Flex>
+          <AddToCart />
+          <Button>
+            <LuPencilLine />
+            <Link href={`/snacks/${snack.id}/edit`}>Edit This Snack</Link>
+          </Button>
+        </Flex>
+      </Grid>
+    </Flex>
   );
 };
 
