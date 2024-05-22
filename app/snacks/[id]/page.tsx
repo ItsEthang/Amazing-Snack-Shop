@@ -1,10 +1,12 @@
-import { AddToCart, SnackStockBadge } from "@/app/components";
+import { AddToCart } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Box, Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Flex, Grid, Box } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import { LuPencilLine } from "react-icons/lu";
-import Link from "next/link";
+import EditSnackButton from "./EditSnackButton";
+import SnackDetails from "./SnackDetails";
+import SnackImage from "./SnackImage";
+import SnackTitle from "./SnackTitle";
+
 interface Props {
   params: {
     id: string;
@@ -23,33 +25,23 @@ const SnackDetailsPage = async ({ params }: Props) => {
   if (!snack) notFound();
 
   return (
-    <Flex gap="5" direction="column">
-      <Flex align="center" gap="3">
-        <Heading as="h1">{snack.name}</Heading>
-        <SnackStockBadge quantity={snack.quantity} />
-      </Flex>
-      <Grid columns={{ initial: "1", sm: "2" }}>
-        <Box>
-          <img
-            src={snack.image}
-            alt={snack.name}
-            className="object-cover rounded-lg"
-          />
-        </Box>
-        <Flex direction="column" align="center" gap="3" justify="center">
-          <ReactMarkdown className="prose">{snack.description}</ReactMarkdown>
-          <Flex align="center" justify="between">
-            <Text as="div">Price:</Text>
-            <Text as="div">$ {+snack.price}</Text>
-          </Flex>
+    <Box>
+      <SnackTitle name={snack.name} quantity={snack.quantity} />
+      <Grid columns={{ initial: "1", sm: "2" }} className="mt-3">
+        <SnackImage url={snack.image} alt={snack.name} />
+        <Flex
+          direction="column"
+          align="center"
+          gap="3"
+          justify="center"
+          className="mt-3 md:m-0"
+        >
+          <SnackDetails description={snack.description} price={+snack.price} />
           <AddToCart />
-          <Button>
-            <LuPencilLine />
-            <Link href={`/snacks/${snack.id}/edit`}>Edit This Snack</Link>
-          </Button>
+          <EditSnackButton snackId={snack.id} />
         </Flex>
       </Grid>
-    </Flex>
+    </Box>
   );
 };
 
