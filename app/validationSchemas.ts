@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 //Validation schema
-export const createSnackSchema = z.object({
+export const snackSchema = z.object({
   image: z.string().url({ message: "Invalid URL" }).max(2048),
   name: z
     .string()

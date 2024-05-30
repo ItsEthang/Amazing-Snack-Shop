@@ -1,6 +1,6 @@
 "use client";
 import ErrorMessage from "@/app/components/ErrorMessage";
-import { createSnackSchema } from "@/app/validationSchemas";
+import { snackSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Snack } from "@prisma/client";
 import { Box, Button, Callout, TextField, Text, Flex } from "@radix-ui/themes";
@@ -30,7 +30,7 @@ interface Props {
 //   price: number;
 // }
 //Replaced by zod infer type from zod schema
-type SnackFormType = z.infer<typeof createSnackSchema>;
+type SnackFormType = z.infer<typeof snackSchema>;
 
 const SnackForm = ({ snack }: Props) => {
   //router is for redirecting etc.
@@ -42,7 +42,7 @@ const SnackForm = ({ snack }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm<SnackFormType>({
-    resolver: zodResolver(createSnackSchema),
+    resolver: zodResolver(snackSchema),
   });
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);

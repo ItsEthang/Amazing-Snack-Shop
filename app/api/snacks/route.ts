@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
-import { createSnackSchema } from "../../validationSchemas";
+import { snackSchema } from "../../validationSchemas";
 
 //Add new snack
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const validation = createSnackSchema.safeParse(body);
+  const validation = snackSchema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
