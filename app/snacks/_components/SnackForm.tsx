@@ -50,7 +50,11 @@ const SnackForm = ({ snack }: Props) => {
   const onSubmit: SubmitHandler<SnackFormType> = async (data) => {
     try {
       setSubmitting(true);
-      await axios.post("/api/snacks", data);
+      if (snack) {
+        await axios.patch("/api/snacks/" + snack.id, data);
+      } else {
+        await axios.post("/api/snacks", data);
+      }
       router.push("/snacks");
     } catch (error) {
       setError("Due to an error, this snack cannot be added :(");
