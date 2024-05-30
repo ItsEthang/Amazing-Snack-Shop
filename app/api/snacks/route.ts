@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
       name: body.name,
       description: body.description,
       price: body.price,
+      quantity: body.quantity,
     },
   });
 

@@ -9,4 +9,5 @@ export const createSnackSchema = z.object({
     .max(255, { message: "Name is too long!" }),
   description: z.string().min(1, { message: "Description cannot be empty" }),
   price: z.number().nonnegative({ message: "Price cannot be negative!" }),
+  quantity: z.number().nonnegative({ message: "Quantity cannot be negative!" }),
 });
