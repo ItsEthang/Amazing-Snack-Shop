@@ -56,6 +56,7 @@ const SnackForm = ({ snack }: Props) => {
         await axios.post("/api/snacks", data);
       }
       router.push("/snacks");
+      router.refresh();
     } catch (error) {
       setError("Due to an error, this snack cannot be added :(");
       setSubmitting(false);

@@ -1,5 +1,4 @@
 import { Box } from "@radix-ui/themes";
-import React from "react";
 
 interface Props {
   url: string;

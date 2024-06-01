@@ -12,7 +12,10 @@ const SnacksPage = async () => {
       <SnackToolBar />
       <Grid columns={{ initial: "1", xs: "2", md: "3", lg: "5" }} gap="5">
         {snacks.map((snack) => (
-          <Box className="border-solid border-2 border-zinc-200 rounded-lg p-5 ">
+          <Box
+            key={snack.id}
+            className="border-solid border-2 border-zinc-200 rounded-lg p-5 "
+          >
             <Flex direction="column" gap="3">
               <SnackStockBadge quantity={snack.quantity} />
               <Link
@@ -43,5 +46,7 @@ const SnacksPage = async () => {
     </div>
   );
 };
+
+export const dynamic = "force-dynamic";
 
 export default SnacksPage;
