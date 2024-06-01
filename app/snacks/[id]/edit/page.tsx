@@ -1,6 +1,12 @@
 import prisma from "@/prisma/client";
-import SnackForm from "../../_components/SnackForm";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
+import SnackFormLoading from "./loading";
+
+const SnackForm = dynamic(() => import("@/app/snacks/_components/SnackForm"), {
+  ssr: false,
+  loading: () => <SnackFormLoading />,
+});
 
 interface Props {
   params: {
