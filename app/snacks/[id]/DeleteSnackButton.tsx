@@ -1,8 +1,19 @@
+"use client";
+
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import axios from "axios";
 import React from "react";
 import { FaTrashCan } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 const DeleteSnackButton = ({ snackId }: { snackId: number }) => {
+  const router = useRouter();
+
+  const onDelete = async () => {
+    await axios.delete("/api/snacks/" + snackId);
+    router.push("/snacks");
+    router.refresh();
+  };
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
@@ -25,7 +36,7 @@ const DeleteSnackButton = ({ snackId }: { snackId: number }) => {
             </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
-            <Button variant="solid" color="crimson">
+            <Button variant="solid" color="crimson" onClick={onDelete}>
               Yes. I want to delete it!
             </Button>
           </AlertDialog.Action>
