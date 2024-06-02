@@ -41,3 +41,28 @@ export async function PATCH(
 
   return NextResponse.json(updatedSnack);
 }
+
+//Delete existing snack
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  //Find the snack with the id
+  const snack = await prisma.snack.findUnique({
+    where: {
+      id: +params.id,
+    },
+  });
+
+  if (!snack) {
+    return NextResponse.json({ error: "Invalid snack ID" }, { status: 404 });
+  }
+
+  await prisma.snack.delete({
+    where: {
+      id: +params.id,
+    },
+  });
+
+  return NextResponse.json({});
+}
