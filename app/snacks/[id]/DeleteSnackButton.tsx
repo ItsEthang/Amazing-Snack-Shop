@@ -1,21 +1,24 @@
 "use client";
 
-import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import { AlertDialog, Button, Flex, Spinner } from "@radix-ui/themes";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaTrashCan } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
 
 const DeleteSnackButton = ({ snackId }: { snackId: number }) => {
   const [error, setError] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
   const router = useRouter();
 
   const deleteSnack = async () => {
     try {
+      setDeleting(true);
       await axios.delete("/api/snacks/" + snackId);
       router.push("/snacks");
       router.refresh();
     } catch (error) {
+      setDeleting(false);
       setError(true);
     }
   };
@@ -23,8 +26,10 @@ const DeleteSnackButton = ({ snackId }: { snackId: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="crimson">
-            <FaTrashCan />
+          <Button color="crimson" disabled={isDeleting}>
+            <Spinner loading={isDeleting}>
+              <FaTrashCan />
+            </Spinner>
             Delete Snack
           </Button>
         </AlertDialog.Trigger>
