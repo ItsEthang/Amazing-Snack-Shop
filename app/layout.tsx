@@ -26,9 +26,10 @@ export default function RootLayout({
       <body className={glory.className}>
         <Theme accentColor="tomato" grayColor="olive">
           <Navbar />
-          <Container size="4">
-            <main className="p-5">{children}</main>
-          </Container>
+
+          <main className="p-5">
+            <Container>{children}</Container>
+          </main>
         </Theme>
       </body>
     </html>
