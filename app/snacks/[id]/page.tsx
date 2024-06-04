@@ -7,6 +7,7 @@ import SnackDetails from "./SnackDetails";
 import SnackImage from "./SnackImage";
 import SnackTitle from "./SnackTitle";
 import DeleteSnackButton from "./DeleteSnackButton";
+import SelectQuantity from "@/app/components/SelectQuantity";
 
 interface Props {
   params: {
@@ -43,6 +44,7 @@ const SnackDetailsPage = async ({ params }: Props) => {
           className="mt-3 md:m-0 lg:col-span-2 xl:col-span-3"
         >
           <SnackDetails description={snack.description} price={+snack.price} />
+          <SelectQuantity snackId={snack.id} />
           <AddToCart />
           <EditSnackButton snackId={snack.id} />
           <DeleteSnackButton snackId={snack.id} />
