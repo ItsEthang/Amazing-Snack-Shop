@@ -3,7 +3,6 @@ import prisma from "@/prisma/client";
 import { Box, Flex, Grid, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import SnackToolBar from "./SnackToolBar";
-import SelectQuantity from "../components/SelectQuantity";
 
 const SnacksPage = async () => {
   const snacks = await prisma.snack.findMany();
@@ -38,14 +37,12 @@ const SnacksPage = async () => {
                 </Flex>
               </Link>
 
-              <Flex
-                justify={{ initial: "between", lg: "center" }}
-                direction={{ lg: "column" }}
-                gap={{ lg: "3" }}
-              >
-                <SelectQuantity snackId={snack.id} />
-                <AddToCart />
-              </Flex>
+              <AddToCart
+                id={snack.id}
+                name={snack.name}
+                quantity={snack.quantity}
+                price={snack.price.toString()}
+              />
             </Flex>
           </Box>
         ))}
