@@ -4,7 +4,7 @@ import { Button, Flex, Select } from "@radix-ui/themes";
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
-interface Product {
+export interface Product {
   id: number;
   name: string;
   quantity: number;
