@@ -1,3 +1,8 @@
 export default function Home() {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      Amazing Snack Shop's website is still under construction 🚧 🚧 🚧. Thank
+      you for your patience!
+    </div>
+  );
 }
