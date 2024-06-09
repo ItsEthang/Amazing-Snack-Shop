@@ -2,7 +2,7 @@
 import { Button, Card, Heading, Table, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { Product } from "@/app/components/AddToCart";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface CartItem {
   product: Product;
@@ -10,11 +10,13 @@ interface CartItem {
 }
 
 const SnackOrderPage = () => {
-  const router = useRouter();
   // Check if running in the browser
   if (typeof window !== "undefined") {
-    const cartString = sessionStorage.getItem("cart");
-    if (!cartString) {
+    const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+      const cartString = sessionStorage.getItem("cart");
+      return cartString ? JSON.parse(cartString) : [];
+    });
+    if (cartItems.length === 0) {
       return (
         <Text as="div">
           You don't have any products in the cart at the moment.{" "}
@@ -25,13 +27,23 @@ const SnackOrderPage = () => {
         </Text>
       );
     }
-    const cart = JSON.parse(cartString);
+
+    const onDelete = (productId: number) => {
+      const updatedCart = cartItems.filter(
+        (item) => item.product.id !== productId
+      );
+      sessionStorage.setItem("cart", JSON.stringify(updatedCart));
+      setCartItems(updatedCart);
+    };
+
+    const onClear = () => {
+      setCartItems([]);
+      sessionStorage.clear();
+    };
     return (
       <>
-        <Heading as="h1" className="mb-5">
-          My Orders
-        </Heading>
-        <Card>
+        <Heading>My Orders</Heading>
+        <Card className="my-5">
           <Table.Root>
             <Table.Header>
               <Table.Row>
@@ -39,26 +51,39 @@ const SnackOrderPage = () => {
                 <Table.ColumnHeaderCell>Quantity</Table.ColumnHeaderCell>
                 <Table.ColumnHeaderCell>Item Price</Table.ColumnHeaderCell>
                 <Table.ColumnHeaderCell>Total Price</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
               </Table.Row>
             </Table.Header>
 
             <Table.Body>
-              {cart.map((item: CartItem) => (
-                <Table.Row>
-                  <Table.RowHeaderCell>{item.product.name}</Table.RowHeaderCell>
-                  <Table.Cell>{item.quantity}</Table.Cell>
-                  <Table.Cell>$ {+item.product.price}</Table.Cell>
-                  <Table.Cell>
+              {cartItems.map((item: CartItem) => (
+                <Table.Row key={item.product.id}>
+                  <Table.RowHeaderCell className="align-middle">
+                    {item.product.name}
+                  </Table.RowHeaderCell>
+                  <Table.Cell className="align-middle">
+                    {item.quantity}
+                  </Table.Cell>
+                  <Table.Cell className="align-middle">
+                    $ {+item.product.price}
+                  </Table.Cell>
+                  <Table.Cell className="align-middle">
                     $ {+item.product.price * item.quantity}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      color="gray"
+                      onClick={() => onDelete(item.product.id)}
+                    >
+                      Delete
+                    </Button>
                   </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
           </Table.Root>
         </Card>
-        <Button onClick={() => (sessionStorage.clear(), router.refresh())}>
-          Clear Cart
-        </Button>
+        <Button onClick={() => onClear()}>Clear Cart</Button>
       </>
     );
   }
