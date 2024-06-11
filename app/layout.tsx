@@ -4,6 +4,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Glory } from "next/font/google";
 import Navbar from "./Navbar";
+import AuthProvider from "./auth/Provider";
 
 const glory = Glory({
   subsets: ["latin"],
@@ -25,8 +26,9 @@ export default function RootLayout({
     <html lang="en" className={glory.variable}>
       <body className={glory.className}>
         <Theme accentColor="tomato" grayColor="olive">
-          <Navbar />
-
+          <AuthProvider>
+            <Navbar />
+          </AuthProvider>
           <main className="p-5">
             <Container>{children}</Container>
           </main>

@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { GiChipsBag } from "react-icons/gi";
 import { FaShoppingBag } from "react-icons/fa";
 import classNames from "classnames";
-import { Flex, Text } from "@radix-ui/themes";
+import { Box, Text } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const links = [
@@ -14,6 +15,8 @@ const Navbar = () => {
   ];
 
   const activePath = usePathname();
+
+  const { status, data: session } = useSession();
 
   return (
     <nav className="flex border-b-2 mb-5 px-6 h-16 items-center justify-between">
@@ -37,13 +40,23 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-      <Link
-        href="/snacks/orders"
-        className="hover:underline underline-offset-8"
-      >
-        <FaShoppingBag className="h-auto w-5 inline mr-2" />
-        <Text>My Order</Text>
-      </Link>
+      <Box>
+        {status === "authenticated" && (
+          <Link href="/api/auth/signout">Log Out</Link>
+        )}
+        {status === "unauthenticated" && (
+          <Link href="/api/auth/signin">Log In</Link>
+        )}
+      </Box>
+      <Box>
+        <Link
+          href="/snacks/orders"
+          className="hover:underline underline-offset-8"
+        >
+          <FaShoppingBag className="h-auto w-5 inline mr-2" />
+          <Text>My Order</Text>
+        </Link>
+      </Box>
     </nav>
   );
 };
