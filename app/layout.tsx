@@ -25,14 +25,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={glory.variable}>
       <body className={glory.className}>
-        <Theme accentColor="tomato" grayColor="olive">
-          <AuthProvider>
+        <AuthProvider>
+          <Theme accentColor="tomato" grayColor="olive">
             <Navbar />
-          </AuthProvider>
-          <main className="p-5">
-            <Container>{children}</Container>
-          </main>
-        </Theme>
+            <main className="p-5">
+              <Container>{children}</Container>
+            </main>
+          </Theme>
+        </AuthProvider>
       </body>
     </html>
   );
