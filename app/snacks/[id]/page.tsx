@@ -7,6 +7,8 @@ import SnackDetails from "./SnackDetails";
 import SnackImage from "./SnackImage";
 import SnackTitle from "./SnackTitle";
 import DeleteSnackButton from "./DeleteSnackButton";
+import { getServerSession } from "next-auth";
+import authOptions from "@/app/auth/AuthOptions";
 
 interface Props {
   params: {
@@ -16,6 +18,7 @@ interface Props {
 
 const SnackDetailsPage = async ({ params }: Props) => {
   if (isNaN(Number(params.id))) notFound();
+  const session = await getServerSession(authOptions);
 
   const snack = await prisma.snack.findUnique({
     where: {
@@ -50,8 +53,12 @@ const SnackDetailsPage = async ({ params }: Props) => {
             quantity={snack.quantity}
             price={snack.price.toString()}
           />
-          <EditSnackButton snackId={snack.id} />
-          <DeleteSnackButton snackId={snack.id} />
+          {session && (
+            <>
+              <EditSnackButton snackId={snack.id} />
+              <DeleteSnackButton snackId={snack.id} />
+            </>
+          )}
         </Flex>
       </Grid>
     </Box>

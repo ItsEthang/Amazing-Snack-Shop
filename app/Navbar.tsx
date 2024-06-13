@@ -90,7 +90,7 @@ const AuthDropDown = () => {
             src={session!.user!.image!}
             fallback="?"
             radius="full"
-            size="3"
+            size="2"
             referrerPolicy="no-referrer"
           />
         </DropdownMenu.Trigger>
