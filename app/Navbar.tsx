@@ -16,15 +16,6 @@ import {
 import { useSession } from "next-auth/react";
 
 const Navbar = () => {
-  const links = [
-    { label: "Home", href: "/" },
-    { label: "Snacks", href: "/snacks" },
-  ];
-
-  const activePath = usePathname();
-
-  const { status, data: session } = useSession();
-
   return (
     <nav className="border-b-2 mb-5 py-4 px-3">
       <Container>
@@ -33,52 +24,11 @@ const Navbar = () => {
             <Link href="/">
               <GiChipsBag className="h-auto w-8" />
             </Link>
-            <ul className="flex space-x-6">
-              {links.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={classNames({
-                      "text-zinc-900": link.href === activePath,
-                      "text-zinc-500": link.href !== activePath,
-                      "hover:text-zinc-800 transition-colors": true,
-                    })}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <NavLinks />
           </Flex>
 
           <Flex gap="5" align="center">
-            <Box>
-              {status === "authenticated" && (
-                <DropdownMenu.Root>
-                  <DropdownMenu.Trigger>
-                    <Avatar
-                      src={session.user!.image!}
-                      fallback="?"
-                      radius="full"
-                      size="3"
-                      referrerPolicy="no-referrer"
-                    />
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Label>
-                      Hi! {session.user?.name}
-                    </DropdownMenu.Label>
-                    <DropdownMenu.Item>
-                      <Link href="/api/auth/signout">Log Out</Link>
-                    </DropdownMenu.Item>
-                  </DropdownMenu.Content>
-                </DropdownMenu.Root>
-              )}
-              {status === "unauthenticated" && (
-                <Link href="/api/auth/signin">Log In</Link>
-              )}
-            </Box>
+            <AuthDropDown />
             <Box>
               <Link
                 href="/snacks/orders"
@@ -92,6 +42,65 @@ const Navbar = () => {
         </Flex>
       </Container>
     </nav>
+  );
+};
+
+const NavLinks = () => {
+  const links = [
+    { label: "Home", href: "/" },
+    { label: "Snacks", href: "/snacks" },
+  ];
+
+  const activePath = usePathname();
+  return (
+    <ul className="flex space-x-6">
+      {links.map((link) => (
+        <li key={link.label}>
+          <Link
+            key={link.href}
+            href={link.href}
+            className={classNames({
+              "text-zinc-900": link.href === activePath,
+              "text-zinc-500": link.href !== activePath,
+              "hover:text-zinc-800 transition-colors": true,
+            })}
+          >
+            {link.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const AuthDropDown = () => {
+  const { status, data: session } = useSession();
+  if (status === "loading") {
+    return null;
+  }
+  if (status === "unauthenticated") {
+    return <Link href="/api/auth/signin">Log In</Link>;
+  }
+  return (
+    <Box>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <Avatar
+            src={session!.user!.image!}
+            fallback="?"
+            radius="full"
+            size="3"
+            referrerPolicy="no-referrer"
+          />
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          <DropdownMenu.Label>Hi! {session!.user?.name}</DropdownMenu.Label>
+          <DropdownMenu.Item>
+            <Link href="/api/auth/signout">Log Out</Link>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    </Box>
   );
 };
 
