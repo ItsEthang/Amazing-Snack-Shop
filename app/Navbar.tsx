@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GiChipsBag } from "react-icons/gi";
 import { FaShoppingBag } from "react-icons/fa";
+import Skeleton from "@/app/components/Skeleton";
 import classNames from "classnames";
 import {
   Avatar,
@@ -76,7 +77,7 @@ const NavLinks = () => {
 const AuthDropDown = () => {
   const { status, data: session } = useSession();
   if (status === "loading") {
-    return null;
+    return <Skeleton width="3rem" height="1.5rem" />;
   }
   if (status === "unauthenticated") {
     return <Link href="/api/auth/signin">Log In</Link>;
