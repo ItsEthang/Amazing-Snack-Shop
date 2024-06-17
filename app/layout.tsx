@@ -3,8 +3,11 @@ import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Glory } from "next/font/google";
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
 import AuthProvider from "./auth/Provider";
+import dynamic from "next/dynamic";
+
+const Navbar = dynamic(() => import("./Navbar"), { ssr: false });
 
 const glory = Glory({
   subsets: ["latin"],

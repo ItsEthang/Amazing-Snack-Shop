@@ -15,6 +15,8 @@ import {
   Text,
 } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { CartItem } from "./snacks/orders/OrderList";
 
 const Navbar = () => {
   return (
@@ -30,15 +32,7 @@ const Navbar = () => {
 
           <Flex gap="5" align="center">
             <AuthDropDown />
-            <Box>
-              <Link
-                href="/snacks/orders"
-                className="hover:underline underline-offset-8"
-              >
-                <FaShoppingBag className="h-auto w-5 inline mr-2" />
-                <Text>My Order</Text>
-              </Link>
-            </Box>
+            <MyOrder />
           </Flex>
         </Flex>
       </Container>
@@ -101,6 +95,42 @@ const AuthDropDown = () => {
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
+    </Box>
+  );
+};
+const MyOrder = () => {
+  const cartString = sessionStorage.getItem("cart");
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    return cartString ? JSON.parse(cartString) : [];
+  });
+
+  // Effect to listen for changes in sessionStorage
+  useEffect(() => {
+    const handleStorageChange: (e: StorageEvent) => void = (e) => {
+      console.log("Handle storage change! for " + e);
+      if (e.key === "cart" && e.newValue !== null) {
+        setCartItems(JSON.parse(e.newValue));
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  // Calculate the total item count
+  const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  return (
+    <Box>
+      <Text>{itemCount}</Text>
+      <Link
+        href="/snacks/orders"
+        className="hover:underline underline-offset-8"
+      >
+        <FaShoppingBag className="h-auto w-5 inline mr-2" />
+        <Text>My Order</Text>
+      </Link>
     </Box>
   );
 };

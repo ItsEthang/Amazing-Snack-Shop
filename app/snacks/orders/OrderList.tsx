@@ -5,7 +5,7 @@ import { Card, Table, Button, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import React, { useState } from "react";
 
-interface CartItem {
+export interface CartItem {
   product: Product;
   quantity: number;
 }
