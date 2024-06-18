@@ -39,6 +39,10 @@ const OrderList = () => {
     setCartItems([]);
     sessionStorage.clear();
   };
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + +item.product.price * item.quantity,
+    0
+  );
 
   return (
     <>
@@ -57,9 +61,7 @@ const OrderList = () => {
           <Table.Body>
             {cartItems.map((item: CartItem) => (
               <Table.Row key={item.product.id} align="center">
-                <Table.RowHeaderCell justify="center">
-                  {item.product.name}
-                </Table.RowHeaderCell>
+                <Table.RowHeaderCell>{item.product.name}</Table.RowHeaderCell>
                 <Table.Cell>{item.quantity}</Table.Cell>
                 <Table.Cell>$ {+item.product.price}</Table.Cell>
                 <Table.Cell>$ {+item.product.price * item.quantity}</Table.Cell>
@@ -73,6 +75,15 @@ const OrderList = () => {
                 </Table.Cell>
               </Table.Row>
             ))}
+            <Table.Row>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell>
+                <Text weight="bold">Total Price: </Text>
+              </Table.Cell>
+              <Table.Cell>$ {totalPrice}</Table.Cell>
+            </Table.Row>
           </Table.Body>
         </Table.Root>
       </Card>

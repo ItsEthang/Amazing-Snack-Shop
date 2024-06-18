@@ -107,8 +107,9 @@ const MyOrder = () => {
   // Effect to listen for changes in sessionStorage
   useEffect(() => {
     const handleStorageChange: (e: StorageEvent) => void = (e) => {
-      console.log("Handle storage change! for " + e);
+      console.log(e);
       if (e.key === "cart" && e.newValue !== null) {
+        console.log("Set new cart Item");
         setCartItems(JSON.parse(e.newValue));
       }
     };
