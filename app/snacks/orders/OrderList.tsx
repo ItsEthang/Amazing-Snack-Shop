@@ -1,9 +1,10 @@
 "use client";
 
 import { Product } from "@/app/components/AddToCart";
-import { Card, Table, Button, Text } from "@radix-ui/themes";
+import { Card, Table, Button, Text, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 import React, { useState } from "react";
+import PayButton from "./PayButton";
 
 export interface CartItem {
   product: Product;
@@ -63,8 +64,8 @@ const OrderList = () => {
               <Table.Row key={item.product.id} align="center">
                 <Table.RowHeaderCell>{item.product.name}</Table.RowHeaderCell>
                 <Table.Cell>{item.quantity}</Table.Cell>
-                <Table.Cell>$ {+item.product.price}</Table.Cell>
-                <Table.Cell>$ {+item.product.price * item.quantity}</Table.Cell>
+                <Table.Cell>${+item.product.price}</Table.Cell>
+                <Table.Cell>${+item.product.price * item.quantity}</Table.Cell>
                 <Table.Cell>
                   <Button
                     color="gray"
@@ -82,12 +83,15 @@ const OrderList = () => {
               <Table.Cell>
                 <Text weight="bold">Total Price: </Text>
               </Table.Cell>
-              <Table.Cell>$ {totalPrice}</Table.Cell>
+              <Table.Cell>${totalPrice}</Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table.Root>
       </Card>
-      <Button onClick={() => onClear()}>Clear Cart</Button>
+      <Flex justify="between">
+        <Button onClick={() => onClear()}>Clear Cart</Button>
+        <PayButton totalPrice={totalPrice} />
+      </Flex>
     </>
   );
 };
