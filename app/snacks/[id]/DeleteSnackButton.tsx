@@ -26,7 +26,7 @@ const DeleteSnackButton = ({ snackId }: { snackId: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="crimson" disabled={isDeleting}>
+          <Button color="ruby" disabled={isDeleting}>
             <Spinner loading={isDeleting}>
               <FaTrashCan />
             </Spinner>
@@ -43,12 +43,12 @@ const DeleteSnackButton = ({ snackId }: { snackId: number }) => {
           <Flex gap="3" mt="4" justify="end">
             <AlertDialog.Cancel>
               <Button variant="soft" color="gray">
-                No, let me think...
+                🤔 No, let me think...
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-              <Button variant="solid" color="crimson" onClick={deleteSnack}>
-                Yes. I want to delete it!
+              <Button variant="solid" color="ruby" onClick={deleteSnack}>
+                🫡 Yes. I want to delete it!
               </Button>
             </AlertDialog.Action>
           </Flex>

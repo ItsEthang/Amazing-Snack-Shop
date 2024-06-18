@@ -5,6 +5,7 @@ import { Card, Table, Button, Text, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 import React, { useState } from "react";
 import PayButton from "./PayButton";
+import ClearCartButton from "./ClearCartButton";
 
 export interface CartItem {
   product: Product;
@@ -89,7 +90,7 @@ const OrderList = () => {
         </Table.Root>
       </Card>
       <Flex justify="between">
-        <Button onClick={() => onClear()}>Clear Cart</Button>
+        <ClearCartButton onClear={onClear} />
         <PayButton totalPrice={totalPrice} />
       </Flex>
     </>

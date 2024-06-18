@@ -7,7 +7,7 @@ const PayButton = ({ totalPrice }: { totalPrice: number }) => {
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
-        <Button color="crimson" disabled={isPaying}>
+        <Button color="amber" disabled={isPaying}>
           <Spinner loading={isPaying}>
             <GiPayMoney />
           </Spinner>
@@ -23,16 +23,16 @@ const PayButton = ({ totalPrice }: { totalPrice: number }) => {
         <Flex gap="3" mt="4" justify="end">
           <AlertDialog.Cancel>
             <Button variant="soft" color="gray">
-              Go Back
+              🛒 Go Back
             </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
             <Button
               variant="solid"
-              color="crimson"
+              color="amber"
               onClick={() => setPaying(true)}
             >
-              Yes. Take my money!
+              💸 Take my money!
             </Button>
           </AlertDialog.Action>
         </Flex>
