@@ -6,9 +6,11 @@ import { GiChipsBag } from "react-icons/gi";
 import { FaShoppingBag } from "react-icons/fa";
 import Skeleton from "@/app/components/Skeleton";
 import classNames from "classnames";
+import { RxHamburgerMenu } from "react-icons/rx";
 import {
   Avatar,
   Box,
+  Button,
   Container,
   DropdownMenu,
   Flex,
@@ -48,23 +50,51 @@ const NavLinks = () => {
 
   const activePath = usePathname();
   return (
-    <ul className="flex space-x-6">
-      {links.map((link) => (
-        <li key={link.label}>
-          <Link
-            key={link.href}
-            href={link.href}
-            className={classNames({
-              "text-zinc-900": link.href === activePath,
-              "text-zinc-500": link.href !== activePath,
-              "hover:text-zinc-800 transition-colors": true,
-            })}
-          >
-            {link.label}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="hidden space-x-6 sm:flex">
+        {links.map((link) => (
+          <li key={link.label}>
+            <Link
+              key={link.href}
+              href={link.href}
+              className={classNames({
+                "text-zinc-900": link.href === activePath,
+                "text-zinc-500": link.href !== activePath,
+                "hover:text-zinc-800 transition-colors": true,
+              })}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className="sm:hidden">
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger>
+            <Button variant="ghost">
+              <RxHamburgerMenu className="h-auto w-6" />
+            </Button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            {links.map((link) => (
+              <DropdownMenu.Item>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={classNames({
+                    "text-zinc-900": link.href === activePath,
+                    "text-zinc-500": link.href !== activePath,
+                    "hover:text-zinc-800 transition-colors": true,
+                  })}
+                >
+                  {link.label}
+                </Link>
+              </DropdownMenu.Item>
+            ))}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      </div>
+    </>
   );
 };
 
@@ -98,6 +128,7 @@ const AuthDropDown = () => {
     </Box>
   );
 };
+
 const MyOrder = () => {
   const cartString = sessionStorage.getItem("cart");
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -130,7 +161,7 @@ const MyOrder = () => {
         className="hover:underline underline-offset-8"
       >
         <FaShoppingBag className="h-auto w-5 inline mr-2" />
-        <Text>My Order</Text>
+        <Text className="hidden sm:inline">My Order</Text>
       </Link>
     </Box>
   );

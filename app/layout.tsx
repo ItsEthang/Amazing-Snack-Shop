@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en" className={glory.variable}>
       <body className={glory.className}>
         <AuthProvider>
-          <Theme accentColor="tomato" grayColor="olive">
+          <Theme accentColor="amber" grayColor="olive">
             <Navbar />
             <main className="p-5">
               <Container>{children}</Container>
