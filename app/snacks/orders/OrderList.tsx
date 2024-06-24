@@ -7,11 +7,8 @@ import Link from "next/link";
 import { useContext } from "react";
 import ClearCartButton from "./ClearCartButton";
 import PayButton from "./PayButton";
-
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
+import AdjustQuantity from "./AdjustQuantity";
+import { CartItem } from "@/app/context/CartContext";
 
 const OrderList = () => {
   const { cartItems, deleteFromCart, clearCart } = useContext(CartContext);
@@ -54,7 +51,9 @@ const OrderList = () => {
             {cartItems.map((item: CartItem) => (
               <Table.Row key={item.product.id} align="center">
                 <Table.RowHeaderCell>{item.product.name}</Table.RowHeaderCell>
-                <Table.Cell>{item.quantity}</Table.Cell>
+                <Table.Cell>
+                  <AdjustQuantity cartItem={item} />
+                </Table.Cell>
                 <Table.Cell>${+item.product.price}</Table.Cell>
                 <Table.Cell>${+item.product.price * item.quantity}</Table.Cell>
                 <Table.Cell>

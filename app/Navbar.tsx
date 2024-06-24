@@ -19,7 +19,7 @@ import {
 } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
-import { CartItem } from "./snacks/orders/OrderList";
+import { CartItem } from "./context/CartContext";
 import CartContext from "./context/CartContext";
 
 const Navbar = () => {
