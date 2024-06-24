@@ -49,9 +49,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
     if (foundIndex !== -1) {
       // Update the cartItems state by replacing the existing item with the updated one
       updatedCartItems = cartItems.map((item) =>
-        item.product.id === product.id
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
+        item.product.id === product.id ? { ...item, quantity: quantity } : item
       );
     } else {
       // Update the cartItems state by adding the new item
