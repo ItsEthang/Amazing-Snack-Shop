@@ -1,11 +1,12 @@
 "use client";
 
 import { Product } from "@/app/components/AddToCart";
-import { Card, Table, Button, Text, Flex } from "@radix-ui/themes";
+import CartContext from "@/app/context/CartContext";
+import { Button, Card, Flex, Heading, Table, Text } from "@radix-ui/themes";
 import Link from "next/link";
-import React, { useState } from "react";
-import PayButton from "./PayButton";
+import { useContext } from "react";
 import ClearCartButton from "./ClearCartButton";
+import PayButton from "./PayButton";
 
 export interface CartItem {
   product: Product;
@@ -13,34 +14,19 @@ export interface CartItem {
 }
 
 const OrderList = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    const cartString = sessionStorage.getItem("cart");
-    return cartString ? JSON.parse(cartString) : [];
-  });
+  const { cartItems, deleteFromCart, clearCart } = useContext(CartContext);
+
   if (cartItems.length === 0) {
     return (
       <Text as="div">
         You don't have any products in the cart at the moment.{" "}
         <Link href="/snacks" className="hover:underline underline-offset-6">
-          Continue browsing
+          <Text weight="bold">Continue browsing ?</Text>
         </Link>
-        ?
       </Text>
     );
   }
 
-  const onDelete = (productId: number) => {
-    const updatedCart = cartItems.filter(
-      (item) => item.product.id !== productId
-    );
-    sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-    setCartItems(updatedCart);
-  };
-
-  const onClear = () => {
-    setCartItems([]);
-    sessionStorage.clear();
-  };
   const totalPrice = cartItems.reduce(
     (total, item) => total + +item.product.price * item.quantity,
     0
@@ -48,6 +34,10 @@ const OrderList = () => {
 
   return (
     <>
+      <Heading as="h4" weight="medium" size="3">
+        You have {cartItems.length} {cartItems.length > 1 ? "items" : "item"} in
+        cart
+      </Heading>
       <Card className="my-5">
         <Table.Root>
           <Table.Header>
@@ -70,7 +60,7 @@ const OrderList = () => {
                 <Table.Cell>
                   <Button
                     color="gray"
-                    onClick={() => onDelete(item.product.id)}
+                    onClick={() => deleteFromCart(item.product.id)}
                   >
                     Delete
                   </Button>
@@ -90,7 +80,7 @@ const OrderList = () => {
         </Table.Root>
       </Card>
       <Flex justify="between">
-        <ClearCartButton onClear={onClear} />
+        <ClearCartButton onClear={clearCart} />
         <PayButton totalPrice={totalPrice} />
       </Flex>
     </>

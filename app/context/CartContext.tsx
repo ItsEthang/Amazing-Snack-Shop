@@ -16,10 +16,14 @@ interface CartItem {
 interface CartContextValue {
   cartItems: CartItem[];
   addToCart: (product: Product, quantity: number) => void;
+  deleteFromCart: (productId: number) => void;
+  clearCart: () => void;
 }
 const CartContext = createContext<CartContextValue>({
   cartItems: [],
   addToCart: () => {},
+  deleteFromCart: () => {},
+  clearCart: () => {},
 });
 
 export const CartProvider = ({ children }: PropsWithChildren) => {
@@ -56,11 +60,25 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
     // Save the updated cart back to sessionStorage
     sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
     setCartItemsState();
-    console.log("adding stuff");
+  };
+
+  const deleteFromCart = (productId: number) => {
+    const updatedCartItems = cartItems.filter(
+      (item) => item.product.id !== productId
+    );
+    sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    setCartItemsState();
+  };
+
+  const clearCart = () => {
+    sessionStorage.clear();
+    setCartItemsState();
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, deleteFromCart, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );
