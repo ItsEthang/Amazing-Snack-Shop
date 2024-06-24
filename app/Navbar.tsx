@@ -77,9 +77,8 @@ const NavLinks = () => {
           </DropdownMenu.Trigger>
           <DropdownMenu.Content>
             {links.map((link) => (
-              <DropdownMenu.Item>
+              <DropdownMenu.Item key={link.href}>
                 <Link
-                  key={link.href}
                   href={link.href}
                   className={classNames({
                     "text-zinc-900": link.href === activePath,

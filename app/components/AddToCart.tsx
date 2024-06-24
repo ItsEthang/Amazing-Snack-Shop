@@ -1,8 +1,9 @@
 "use client";
 
 import { Button, Flex, Select } from "@radix-ui/themes";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import CartContext from "../context/CartContext";
 
 export interface Product {
   id: number;
@@ -11,30 +12,15 @@ export interface Product {
   price: string;
 }
 
-const AddToCart = ({ id, name, quantity, price }: Product) => {
-  const quantities = Array.from({ length: quantity }, (_, i) => i + 1);
+interface Props {
+  product: Product;
+}
+
+const AddToCart = ({ product }: Props) => {
+  const { addToCart } = useContext(CartContext);
+  const quantities = Array.from({ length: product.quantity }, (_, i) => i + 1);
 
   const [selectQuantity, setSelectQuantity] = useState("0");
-
-  const addToCart = (product: Product, quantity: number) => {
-    const cartString = sessionStorage.getItem("cart");
-    const cart = cartString ? JSON.parse(cartString) : [];
-    // Check if the product is already in the cart
-    const foundIndex = cart.findIndex(
-      (item: { product: Product; quantity: number }) =>
-        item.product.id === product.id
-    );
-
-    if (foundIndex !== -1) {
-      // If the product exists, update its quantity
-      cart[foundIndex].quantity += quantity;
-    } else {
-      // If the product does not exist, add it to the cart
-      cart.push({ product, quantity });
-    }
-    // Save the updated cart back to sessionStorage
-    sessionStorage.setItem("cart", JSON.stringify(cart));
-  };
 
   return (
     <Flex
@@ -53,9 +39,8 @@ const AddToCart = ({ id, name, quantity, price }: Product) => {
         </Select.Content>
       </Select.Root>
       <Button
-        onClick={() =>
-          addToCart({ id, name, quantity, price }, +selectQuantity)
-        }
+        disabled={+selectQuantity === 0}
+        onClick={() => addToCart(product, +selectQuantity)}
       >
         <FaShoppingCart />
         Add to Cart

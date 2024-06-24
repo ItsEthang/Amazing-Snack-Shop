@@ -1,14 +1,14 @@
+import authOptions from "@/app/auth/AuthOptions";
 import { AddToCart } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Flex, Grid, Box } from "@radix-ui/themes";
+import { Box, Flex, Grid } from "@radix-ui/themes";
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
+import DeleteSnackButton from "./DeleteSnackButton";
 import EditSnackButton from "./EditSnackButton";
 import SnackDetails from "./SnackDetails";
 import SnackImage from "./SnackImage";
 import SnackTitle from "./SnackTitle";
-import DeleteSnackButton from "./DeleteSnackButton";
-import { getServerSession } from "next-auth";
-import authOptions from "@/app/auth/AuthOptions";
 
 interface Props {
   params: {
@@ -48,10 +48,10 @@ const SnackDetailsPage = async ({ params }: Props) => {
           <SnackDetails description={snack.description} price={+snack.price} />
 
           <AddToCart
-            id={snack.id}
-            name={snack.name}
-            quantity={snack.quantity}
-            price={snack.price.toString()}
+            product={{
+              ...snack,
+              price: snack.price.toString(),
+            }}
           />
           {session && (
             <>

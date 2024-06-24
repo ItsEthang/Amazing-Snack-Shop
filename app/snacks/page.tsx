@@ -38,10 +38,10 @@ const SnacksPage = async () => {
               </Link>
 
               <AddToCart
-                id={snack.id}
-                name={snack.name}
-                quantity={snack.quantity}
-                price={snack.price.toString()}
+                product={{
+                  ...snack,
+                  price: snack.price.toString(),
+                }}
               />
             </Flex>
           </Box>

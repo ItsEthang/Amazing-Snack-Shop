@@ -6,6 +6,7 @@ import { Glory } from "next/font/google";
 // import Navbar from "./Navbar";
 import AuthProvider from "./auth/Provider";
 import dynamic from "next/dynamic";
+import GlobalProvider from "./GlobalProvider";
 
 const Navbar = dynamic(() => import("./Navbar"), { ssr: false });
 
@@ -30,10 +31,12 @@ export default function RootLayout({
       <body className={glory.className}>
         <AuthProvider>
           <Theme accentColor="amber" grayColor="olive">
-            <Navbar />
-            <main className="p-5">
-              <Container>{children}</Container>
-            </main>
+            <GlobalProvider>
+              <Navbar />
+              <main className="p-5">
+                <Container>{children}</Container>
+              </main>
+            </GlobalProvider>
           </Theme>
         </AuthProvider>
       </body>
