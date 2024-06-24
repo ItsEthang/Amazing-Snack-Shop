@@ -11,14 +11,16 @@ import {
   Avatar,
   Box,
   Button,
+  Card,
   Container,
   DropdownMenu,
   Flex,
   Text,
 } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartItem } from "./snacks/orders/OrderList";
+import CartContext from "./context/CartContext";
 
 const Navbar = () => {
   return (
@@ -129,40 +131,21 @@ const AuthDropDown = () => {
 };
 
 const MyOrder = () => {
-  const cartString = sessionStorage.getItem("cart");
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    return cartString ? JSON.parse(cartString) : [];
-  });
-
-  // Effect to listen for changes in sessionStorage
-  useEffect(() => {
-    const handleStorageChange: (e: StorageEvent) => void = (e) => {
-      console.log(e);
-      if (e.key === "cart" && e.newValue !== null) {
-        console.log("Set new cart Item");
-        setCartItems(JSON.parse(e.newValue));
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  const { cartItems } = useContext(CartContext);
 
   // Calculate the total item count
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   return (
-    <Box>
-      <Text>{itemCount}</Text>
+    <Card>
       <Link
         href="/snacks/orders"
         className="hover:underline underline-offset-8"
       >
         <FaShoppingBag className="h-auto w-5 inline mr-2" />
+        <Text>({itemCount}) </Text>
         <Text className="hidden sm:inline">My Order</Text>
       </Link>
-    </Box>
+    </Card>
   );
 };
 

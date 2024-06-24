@@ -15,6 +15,7 @@ export interface CartItem {
 
 const OrderList = () => {
   const { cartItems, deleteFromCart, clearCart } = useContext(CartContext);
+  const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   if (cartItems.length === 0) {
     return (
@@ -35,8 +36,7 @@ const OrderList = () => {
   return (
     <>
       <Heading as="h4" weight="medium" size="3">
-        You have {cartItems.length} {cartItems.length > 1 ? "items" : "item"} in
-        cart
+        You have {itemCount} {itemCount > 1 ? "items" : "item"} in cart
       </Heading>
       <Card className="my-5">
         <Table.Root>
