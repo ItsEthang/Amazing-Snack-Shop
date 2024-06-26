@@ -1,21 +1,15 @@
 "use client";
 import { createContext, PropsWithChildren, useState, useEffect } from "react";
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: string;
-}
+import { Snack } from "@prisma/client";
 
 export interface CartItem {
-  product: Product;
+  product: Snack;
   quantity: number;
 }
 
 interface CartContextValue {
   cartItems: CartItem[];
-  addToCart: (product: Product, quantity: number) => void;
+  addToCart: (product: Snack, quantity: number) => void;
   deleteFromCart: (productId: number) => void;
   clearCart: () => void;
 }
@@ -38,10 +32,10 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
     setCartItems(cartString ? JSON.parse(cartString) : []);
   };
 
-  const addToCart = (product: Product, quantity: number) => {
+  const addToCart = (product: Snack, quantity: number) => {
     // Check if the product is already in the cart
     const foundIndex = cartItems.findIndex(
-      (item: { product: Product; quantity: number }) =>
+      (item: { product: Snack; quantity: number }) =>
         item.product.id === product.id
     );
     let updatedCartItems = [];

@@ -4,16 +4,10 @@ import { Button, Flex, Select } from "@radix-ui/themes";
 import { useState, useContext } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import CartContext from "../context/CartContext";
-
-export interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: string;
-}
+import { Snack } from "@prisma/client";
 
 interface Props {
-  product: Product;
+  product: Snack;
 }
 
 const AddToCart = ({ product }: Props) => {

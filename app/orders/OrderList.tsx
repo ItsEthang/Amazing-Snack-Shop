@@ -1,13 +1,12 @@
 "use client";
 
-import CartContext from "@/app/context/CartContext";
+import CartContext, { CartItem } from "@/app/context/CartContext";
 import { Button, Card, Flex, Heading, Table, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { useContext } from "react";
+import AdjustQuantity from "./AdjustQuantity";
 import ClearCartButton from "./ClearCartButton";
 import PayButton from "./PayButton";
-import AdjustQuantity from "./AdjustQuantity";
-import { CartItem } from "@/app/context/CartContext";
 
 const OrderList = () => {
   const { cartItems, deleteFromCart, clearCart } = useContext(CartContext);

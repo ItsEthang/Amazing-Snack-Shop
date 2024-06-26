@@ -1,12 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { GiChipsBag } from "react-icons/gi";
-import { FaShoppingBag } from "react-icons/fa";
 import Skeleton from "@/app/components/Skeleton";
-import classNames from "classnames";
-import { RxHamburgerMenu } from "react-icons/rx";
 import {
   Avatar,
   Box,
@@ -17,9 +11,14 @@ import {
   Flex,
   Text,
 } from "@radix-ui/themes";
+import classNames from "classnames";
 import { useSession } from "next-auth/react";
-import { useContext, useEffect, useState } from "react";
-import { CartItem } from "./context/CartContext";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useContext } from "react";
+import { FaShoppingBag } from "react-icons/fa";
+import { GiChipsBag } from "react-icons/gi";
+import { RxHamburgerMenu } from "react-icons/rx";
 import CartContext from "./context/CartContext";
 
 const Navbar = () => {
