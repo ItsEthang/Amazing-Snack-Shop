@@ -1,9 +1,16 @@
 import { AlertDialog, Button, Flex, Spinner } from "@radix-ui/themes";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { GiPayMoney } from "react-icons/gi";
+import CartContext from "@/app/context/CartContext";
 
 const PayButton = ({ totalPrice }: { totalPrice: number }) => {
+  const { cartItems, deleteFromCart, clearCart } = useContext(CartContext);
   const [isPaying, setPaying] = useState(false);
+  const PayOrder = () => {
+    console.log("Processing payment");
+    console.log("Items of the order: " + JSON.stringify(cartItems));
+    clearCart();
+  };
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
@@ -27,11 +34,7 @@ const PayButton = ({ totalPrice }: { totalPrice: number }) => {
             </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
-            <Button
-              variant="solid"
-              color="amber"
-              onClick={() => setPaying(true)}
-            >
+            <Button variant="solid" color="amber" onClick={() => PayOrder()}>
               💸 Take my money!
             </Button>
           </AlertDialog.Action>
