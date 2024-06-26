@@ -137,10 +137,7 @@ const MyOrder = () => {
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   return (
     <Card>
-      <Link
-        href="/snacks/orders"
-        className="hover:underline underline-offset-8"
-      >
+      <Link href="/orders" className="hover:underline underline-offset-8">
         <FaShoppingBag className="h-auto w-5 inline mr-2" />
         <Text>({itemCount}) </Text>
         <Text className="hidden sm:inline">My Order</Text>

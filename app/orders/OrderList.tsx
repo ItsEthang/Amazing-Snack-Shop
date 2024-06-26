@@ -1,6 +1,5 @@
 "use client";
 
-import { Product } from "@/app/components/AddToCart";
 import CartContext from "@/app/context/CartContext";
 import { Button, Card, Flex, Heading, Table, Text } from "@radix-ui/themes";
 import Link from "next/link";
