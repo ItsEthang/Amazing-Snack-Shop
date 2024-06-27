@@ -47,12 +47,7 @@ const SnackDetailsPage = async ({ params }: Props) => {
         >
           <SnackDetails description={snack.description} price={+snack.price} />
 
-          <AddToCart
-            product={{
-              ...snack,
-              price: snack.price.toString(),
-            }}
-          />
+          <AddToCart product={snack} />
           {session && (
             <>
               <EditSnackButton snackId={snack.id} />
