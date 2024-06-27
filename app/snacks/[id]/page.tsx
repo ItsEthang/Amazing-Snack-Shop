@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import DeleteSnackButton from "./DeleteSnackButton";
 import EditSnackButton from "./EditSnackButton";
 import SnackDetails from "./SnackDetails";
-import SnackImage from "./SnackImage";
+import SnackImage from "../../components/SnackImage";
 import SnackTitle from "./SnackTitle";
 
 interface Props {
@@ -35,7 +35,12 @@ const SnackDetailsPage = async ({ params }: Props) => {
         columns={{ initial: "1", sm: "2", md: "3", lg: "4" }}
         className="mt-3"
       >
-        <Box className="col-span-1">
+        <Box
+          className="col-span-1"
+          position="relative"
+          width="100%"
+          height={{ initial: "500px", lg: "350px" }}
+        >
           <SnackImage url={snack.image} alt={snack.name} />
         </Box>
         <Flex

@@ -2,6 +2,7 @@ import { AddToCart, SnackStockBadge } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Box, Flex, Grid, Text } from "@radix-ui/themes";
 import Link from "next/link";
+import SnackImage from "../components/SnackImage";
 import SnackToolBar from "./SnackToolBar";
 
 const SnacksPage = async () => {
@@ -23,12 +24,18 @@ const SnacksPage = async () => {
                 key={snack.id}
                 className="hover:text-slate-400"
               >
-                <img
-                  src={snack.image}
-                  alt={snack.name}
-                  className="object-cover rounded-lg"
-                />
-                <Text as="div" align="center">
+                <Box
+                  position="relative"
+                  width="100%"
+                  height={{ initial: "300px", md: "250px", lg: "200px" }}
+                >
+                  <SnackImage url={snack.image} alt={snack.name} />
+                </Box>
+                <Text
+                  as="div"
+                  align="center"
+                  className="overflow-hidden text-ellipsis whitespace-nowrap"
+                >
                   {snack.name.toUpperCase()}
                 </Text>
                 <Flex justify="between">
@@ -37,12 +44,7 @@ const SnacksPage = async () => {
                 </Flex>
               </Link>
 
-              <AddToCart
-                product={{
-                  ...snack,
-                  price: snack.price.toString(),
-                }}
-              />
+              <AddToCart product={snack} />
             </Flex>
           </Box>
         ))}

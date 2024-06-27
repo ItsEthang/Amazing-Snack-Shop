@@ -23,10 +23,9 @@ const OrderList = () => {
     );
   }
 
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + +item.product.price * item.quantity,
-    0
-  );
+  const totalPrice = cartItems
+    .reduce((total, item) => total + +item.product.price * item.quantity, 0)
+    .toFixed(2);
 
   return (
     <>
@@ -52,8 +51,10 @@ const OrderList = () => {
                 <Table.Cell>
                   <AdjustQuantity cartItem={item} />
                 </Table.Cell>
-                <Table.Cell>${+item.product.price}</Table.Cell>
-                <Table.Cell>${+item.product.price * item.quantity}</Table.Cell>
+                <Table.Cell>${(+item.product.price).toFixed(2)}</Table.Cell>
+                <Table.Cell>
+                  ${(+item.product.price * item.quantity).toFixed(2)}
+                </Table.Cell>
                 <Table.Cell>
                   <Button
                     color="gray"
@@ -78,7 +79,7 @@ const OrderList = () => {
       </Card>
       <Flex justify="between">
         <ClearCartButton onClear={clearCart} />
-        <PayButton totalPrice={totalPrice} />
+        <PayButton totalPrice={+totalPrice} />
       </Flex>
     </>
   );
