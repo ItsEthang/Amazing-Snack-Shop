@@ -1,7 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/app/components";
-import { Category, Snack } from "@prisma/client";
+import { Category } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -36,13 +36,12 @@ const CategorySelect = ({ onValueChange, defaultValue }: Props) => {
   );
 };
 
-const useCategory = () => {
-  return useQuery({
+const useCategory = () =>
+  useQuery({
     queryKey: ["categories"],
     queryFn: () =>
       axios.get<Category[]>("/api/categories").then((res) => res.data),
-    staleTime: 600_000,
+    staleTime: 6000_000,
     retry: 3,
   });
-};
 export default CategorySelect;
