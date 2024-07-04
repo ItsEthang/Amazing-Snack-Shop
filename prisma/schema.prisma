@@ -14,15 +14,15 @@ datasource db {
 }
 
 model Snack {
-  id          Int      @id @default(autoincrement())
-  image       String   @db.VarChar(2048)
-  name        String   @db.VarChar(255)
-  description String   @db.Text
-  price       Decimal  @db.Decimal(10, 2)
-  quantity    Int      @default(0)
-  addedOn     DateTime @default(now())
-  categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
+  id          Int       @id @default(autoincrement())
+  image       String    @db.VarChar(2048)
+  name        String    @db.VarChar(255)
+  description String    @db.Text
+  price       Decimal   @db.Decimal(10, 2)
+  quantity    Int       @default(0)
+  addedOn     DateTime  @default(now())
+  categoryId  Int?
+  category    Category? @relation(fields: [categoryId], references: [id])
 }
 
 model Category {

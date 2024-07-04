@@ -12,6 +12,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { BsInfoCircle } from "react-icons/bs";
 import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
+import CategorySelect from "./CategorySelect";
 
 //SimpleMDE is a client component that uses browser API, which is not available on the server.
 
@@ -76,14 +77,19 @@ const SnackForm = ({ snack }: Props) => {
         </Text>
       )}
       <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-        <Box maxWidth="400px">
-          <TextField.Root
-            defaultValue={snack?.name}
-            placeholder="Name of the snack"
-            {...register("name")}
-          ></TextField.Root>
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
-        </Box>
+        <Flex justify="between">
+          <Box maxWidth="400px" width={{ sm: "600px" }}>
+            <TextField.Root
+              defaultValue={snack?.name}
+              placeholder="Snack Name"
+              {...register("name")}
+            ></TextField.Root>
+            <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          </Box>
+          <Box>
+            <CategorySelect />
+          </Box>
+        </Flex>
         <Box>
           <TextField.Root
             defaultValue={snack?.image}
