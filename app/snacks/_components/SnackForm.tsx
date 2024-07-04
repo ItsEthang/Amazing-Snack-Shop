@@ -46,7 +46,6 @@ const SnackForm = ({ snack }: Props) => {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const onSubmit: SubmitHandler<SnackFormType> = async (data) => {
-    alert(JSON.stringify(data));
     try {
       setSubmitting(true);
       if (snack) {
@@ -93,6 +92,9 @@ const SnackForm = ({ snack }: Props) => {
               control={control}
               render={({ field }) => (
                 <CategorySelect
+                  defaultValue={
+                    snack?.categoryId ? String(snack.categoryId) : undefined
+                  }
                   onValueChange={(categoryId) => {
                     const categoryIdNumber = Number(categoryId);
                     field.onChange(categoryIdNumber);
