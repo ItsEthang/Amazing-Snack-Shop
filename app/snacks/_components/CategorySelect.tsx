@@ -1,12 +1,16 @@
 "use client";
 
-import { Category, Snack } from "@prisma/client";
+import { Skeleton } from "@/app/components";
+import { Category } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Skeleton } from "@/app/components";
 
-const CategorySelect = () => {
+interface Props {
+  onValueChange: (value: string) => void;
+}
+
+const CategorySelect = ({ onValueChange }: Props) => {
   const { data: categories, error, isLoading } = useCategory();
 
   if (isLoading) return <Skeleton />;
@@ -14,14 +18,7 @@ const CategorySelect = () => {
   if (error) return null;
   return (
     <>
-      <Select.Root
-      // onValueChange={(categoryId) => {
-      //   axios.patch("/api/snacks/" + snack.id, {
-      //     ...snack,
-      //     categoryId: categoryId,
-      //   });
-      // }}
-      >
+      <Select.Root onValueChange={onValueChange}>
         <Select.Trigger placeholder="Assign Category" />
         <Select.Content>
           <Select.Group>
@@ -49,5 +46,4 @@ const useCategory = () => {
     retry: 3,
   });
 };
-
 export default CategorySelect;

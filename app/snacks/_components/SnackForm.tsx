@@ -28,7 +28,7 @@ interface Props {
 //   price: number;
 // }
 //Replaced by zod infer type from zod schema
-type SnackFormType = z.infer<typeof snackSchema>;
+export type SnackFormType = z.infer<typeof snackSchema>;
 
 const SnackForm = ({ snack }: Props) => {
   //router is for redirecting etc.
@@ -46,6 +46,7 @@ const SnackForm = ({ snack }: Props) => {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const onSubmit: SubmitHandler<SnackFormType> = async (data) => {
+    alert(JSON.stringify(data));
     try {
       setSubmitting(true);
       if (snack) {
@@ -87,7 +88,19 @@ const SnackForm = ({ snack }: Props) => {
             <ErrorMessage>{errors.name?.message}</ErrorMessage>
           </Box>
           <Box>
-            <CategorySelect />
+            <Controller
+              name="categoryId"
+              control={control}
+              render={({ field }) => (
+                <CategorySelect
+                  onValueChange={(categoryId) => {
+                    const categoryIdNumber = Number(categoryId);
+                    field.onChange(categoryIdNumber);
+                  }}
+                />
+              )}
+            />
+            <ErrorMessage>{errors.categoryId?.message}</ErrorMessage>
           </Box>
         </Flex>
         <Box>
