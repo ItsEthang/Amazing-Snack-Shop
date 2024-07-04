@@ -21,6 +21,21 @@ export async function PATCH(
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
 
+  const { image, name, description, price, quantity, categoryId } = body;
+  if (categoryId) {
+    const category = await prisma.category.findUnique({
+      where: {
+        id: categoryId,
+      },
+    });
+    if (!category) {
+      return NextResponse.json(
+        { error: "Invalid category ID" },
+        { status: 404 }
+      );
+    }
+  }
+
   //Find the snack with the id
   const snack = await prisma.snack.findUnique({
     where: {
@@ -38,11 +53,12 @@ export async function PATCH(
       id: +params.id,
     },
     data: {
-      image: body.image,
-      name: body.name,
-      description: body.description,
-      price: body.price,
-      quantity: body.quantity,
+      image,
+      name,
+      description,
+      price,
+      quantity,
+      categoryId,
     },
   });
 

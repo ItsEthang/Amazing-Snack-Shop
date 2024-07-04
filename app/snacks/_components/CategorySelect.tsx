@@ -1,6 +1,6 @@
 "use client";
 
-import { Category } from "@prisma/client";
+import { Category, Snack } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -14,7 +14,14 @@ const CategorySelect = () => {
   if (error) return null;
   return (
     <>
-      <Select.Root>
+      <Select.Root
+      // onValueChange={(categoryId) => {
+      //   axios.patch("/api/snacks/" + snack.id, {
+      //     ...snack,
+      //     categoryId: categoryId,
+      //   });
+      // }}
+      >
         <Select.Trigger placeholder="Assign Category" />
         <Select.Content>
           <Select.Group>

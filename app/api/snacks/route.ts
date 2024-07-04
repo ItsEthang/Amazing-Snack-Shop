@@ -16,14 +16,29 @@ export async function POST(request: NextRequest) {
   if (!validation.success) {
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
+  const { image, name, description, price, quantity, categoryId } = body;
+  if (categoryId) {
+    const category = await prisma.category.findUnique({
+      where: {
+        id: categoryId,
+      },
+    });
+    if (!category) {
+      return NextResponse.json(
+        { error: "Invalid category ID" },
+        { status: 404 }
+      );
+    }
+  }
 
   const newSnack = await prisma.snack.create({
     data: {
-      image: body.image,
-      name: body.name,
-      description: body.description,
-      price: body.price,
-      quantity: body.quantity,
+      image,
+      name,
+      description,
+      price,
+      quantity,
+      categoryId,
     },
   });
 
