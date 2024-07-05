@@ -1,18 +1,20 @@
-import { Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import authOptions from "../auth/AuthOptions";
+import CategoryFilter from "./CategoryFilter";
 
 const SnackToolBar = async () => {
   const session = await getServerSession(authOptions);
   return (
-    <div className="mb-5">
+    <Flex justify="between" mb="5">
+      <CategoryFilter />
       {session && (
         <Button>
           <Link href="/snacks/new">Add Snack</Link>
         </Button>
       )}
-    </div>
+    </Flex>
   );
 };
 
