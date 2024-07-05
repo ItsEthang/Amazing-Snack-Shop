@@ -5,8 +5,25 @@ import Link from "next/link";
 import SnackImage from "../components/SnackImage";
 import SnackToolBar from "./SnackToolBar";
 
-const SnacksPage = async () => {
-  const snacks = await prisma.snack.findMany();
+interface Props {
+  searchParams: {
+    category: string;
+  };
+}
+
+const SnacksPage = async ({ searchParams }: Props) => {
+  const isValidCategory = (str: string): boolean => {
+    return /^\d+$/.test(str);
+  };
+
+  const category = isValidCategory(searchParams.category)
+    ? +searchParams.category
+    : undefined;
+  const snacks = await prisma.snack.findMany({
+    where: {
+      categoryId: category,
+    },
+  });
 
   return (
     <div>
