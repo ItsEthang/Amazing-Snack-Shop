@@ -20,7 +20,7 @@ const AddToCart = ({ product }: Props) => {
     <Flex
       justify={{ initial: "between", lg: "center" }}
       direction={{ lg: "column" }}
-      gap={{ lg: "3" }}
+      gap="3"
     >
       <Select.Root onValueChange={setSelectQuantity}>
         <Select.Trigger placeholder="Quantity" />

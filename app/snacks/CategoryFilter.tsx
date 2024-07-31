@@ -16,9 +16,15 @@ const CategoryFilter = () => {
   return (
     <Select.Root
       onValueChange={(category) => {
-        const query =
-          category && category !== " " ? `?category=${category}` : "";
-        router.push("/snacks" + query);
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+
+        // Merge or set category parameter
+        params.set("category", category && category !== " " ? category : "");
+
+        // Construct new URL
+        const newQuery = params.toString();
+        router.push(`/snacks?${newQuery}`);
       }}
     >
       <Select.Trigger placeholder="Filter by category" />

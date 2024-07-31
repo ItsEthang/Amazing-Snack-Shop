@@ -4,17 +4,31 @@ import { Box, Flex, Grid, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import SnackImage from "../components/SnackImage";
 import SnackToolBar from "./SnackToolBar";
+import { Snack } from "@prisma/client";
+
+export interface QueryType {
+  category: string;
+  sortBy: keyof Snack;
+  order: string;
+}
 
 interface Props {
-  searchParams: {
-    category: string;
-  };
+  searchParams: QueryType;
 }
 
 const SnacksPage = async ({ searchParams }: Props) => {
   const isValidCategory = (str: string): boolean => {
     return /^\d+$/.test(str);
   };
+
+  const isValidOrder = (str: string): boolean => {
+    return str === "asc" || str === "desc" ? true : false;
+  };
+
+  const order = isValidOrder(searchParams.order) ? searchParams.order : "asc";
+  const sortBy = searchParams.sortBy
+    ? { [searchParams.sortBy]: order }
+    : undefined;
 
   const category = isValidCategory(searchParams.category)
     ? +searchParams.category
@@ -23,11 +37,12 @@ const SnacksPage = async ({ searchParams }: Props) => {
     where: {
       categoryId: category,
     },
+    orderBy: sortBy,
   });
 
   return (
     <div>
-      <SnackToolBar />
+      <SnackToolBar query={searchParams} />
       <Grid columns={{ initial: "1", xs: "2", md: "3", lg: "5" }} gap="5">
         {snacks.map((snack) => (
           <Box
