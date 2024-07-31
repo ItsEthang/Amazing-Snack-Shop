@@ -12,7 +12,7 @@ const SnackDetails = ({ description, price }: Props) => {
     <>
       <ReactMarkdown className="prose">{description}</ReactMarkdown>
       <Flex align="center" justify="between">
-        <Text as="div">Price: </Text>
+        <Text as="div">Price:&ensp;</Text>
         <Text as="div">${price}</Text>
       </Flex>
     </>

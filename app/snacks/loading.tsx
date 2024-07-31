@@ -7,7 +7,10 @@ const LoadingSnackPage = () => {
 
   return (
     <div>
-      <SnackToolBar />
+      <Flex justify="between" mb="5">
+        <Skeleton />
+        <Skeleton />
+      </Flex>
       <Grid columns={{ initial: "1", md: "3", lg: "5" }} gap="5">
         {Array.from({ length: skeletonCount }).map((_, index) => (
           <Flex
