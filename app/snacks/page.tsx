@@ -5,11 +5,13 @@ import Link from "next/link";
 import SnackImage from "../components/SnackImage";
 import SnackToolBar from "./SnackToolBar";
 import { Snack } from "@prisma/client";
+import Pagination from "../components/Pagination";
 
 export interface QueryType {
   category: string;
   sortBy: keyof Snack;
   order: string;
+  page: string;
 }
 
 interface Props {
@@ -33,11 +35,21 @@ const SnacksPage = async ({ searchParams }: Props) => {
   const category = isValidCategory(searchParams.category)
     ? +searchParams.category
     : undefined;
+
+  const pageSize = 5;
+  const currPage = +searchParams.page || 1;
+  const itemCtn = await prisma.snack.count({
+    where: {
+      categoryId: category,
+    },
+  });
   const snacks = await prisma.snack.findMany({
     where: {
       categoryId: category,
     },
     orderBy: sortBy,
+    skip: (currPage - 1) * pageSize,
+    take: pageSize,
   });
 
   return (
@@ -81,6 +93,7 @@ const SnacksPage = async ({ searchParams }: Props) => {
           </Box>
         ))}
       </Grid>
+      <Pagination itemCtn={itemCtn} pageSize={pageSize} currPage={currPage} />
     </div>
   );
 };

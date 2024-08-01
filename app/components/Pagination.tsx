@@ -28,7 +28,7 @@ const Pagination = ({ itemCtn, pageSize, currPage }: Props) => {
   };
 
   return (
-    <Flex align="center" gap="2">
+    <Flex align="center" justify="center" gap="3" mt="5">
       <Text size="2">
         Page {currPage} of {totalPages}
       </Text>
