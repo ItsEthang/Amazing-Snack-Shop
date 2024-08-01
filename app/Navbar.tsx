@@ -72,7 +72,7 @@ const NavLinks = () => {
       <div className="sm:hidden">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
-            <Button variant="ghost">
+            <Button variant="ghost" color="gray">
               <RxHamburgerMenu className="h-auto w-6" />
             </Button>
           </DropdownMenu.Trigger>
