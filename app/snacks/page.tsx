@@ -1,12 +1,8 @@
-import { AddToCart, SnackStockBadge } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Box, Flex, Grid, Text } from "@radix-ui/themes";
-import Link from "next/link";
-import SnackImage from "../components/SnackImage";
-import SnackToolBar from "./SnackToolBar";
 import { Snack } from "@prisma/client";
 import Pagination from "../components/Pagination";
 import SnackGrid from "./SnackGrid";
+import SnackToolBar from "./SnackToolBar";
 
 export interface QueryType {
   category: string;
