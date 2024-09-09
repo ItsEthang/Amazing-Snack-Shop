@@ -12,6 +12,7 @@ export interface QueryType {
   sortBy: keyof Snack;
   order: string;
   page: string;
+  pageSize: string;
 }
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const SnacksPage = async ({ searchParams }: Props) => {
+  //Parameter validation
   const isValidCategory = (str: string): boolean => {
     return /^\d+$/.test(str);
   };
@@ -36,7 +38,7 @@ const SnacksPage = async ({ searchParams }: Props) => {
     ? +searchParams.category
     : undefined;
 
-  const pageSize = 5;
+  const pageSize = +searchParams.pageSize || 5;
   const currPage = +searchParams.page || 1;
   const itemCtn = await prisma.snack.count({
     where: {
