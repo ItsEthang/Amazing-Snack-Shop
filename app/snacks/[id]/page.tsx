@@ -9,7 +9,7 @@ import EditSnackButton from "./EditSnackButton";
 import SnackDetails from "./SnackDetails";
 import SnackImage from "../../components/SnackImage";
 import SnackTitle from "./SnackTitle";
-import { title } from "process";
+import { cache } from "react";
 
 interface Props {
   params: {
@@ -17,15 +17,19 @@ interface Props {
   };
 }
 
+const fetchSnack = cache((snackId: number) =>
+  prisma.snack.findUnique({
+    where: {
+      id: snackId,
+    },
+  })
+);
+
 const SnackDetailsPage = async ({ params }: Props) => {
   if (isNaN(Number(params.id))) notFound();
   const session = await getServerSession(authOptions);
 
-  const snack = await prisma.snack.findUnique({
-    where: {
-      id: +params.id,
-    },
-  });
+  const snack = await fetchSnack(+params.id);
 
   if (!snack) notFound();
 
@@ -68,9 +72,7 @@ const SnackDetailsPage = async ({ params }: Props) => {
 };
 
 export async function generateMetadata({ params }: Props) {
-  const snack = await prisma.snack.findUnique({
-    where: { id: +params.id },
-  });
+  const snack = await fetchSnack(+params.id);
 
   return {
     title: snack?.name,
