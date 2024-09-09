@@ -21,7 +21,7 @@ const CategoryFilter = () => {
 
         // Merge or set category parameter
         params.set("category", category && category !== " " ? category : "");
-
+        params.set("page", "1");
         // Construct new URL
         const newQuery = params.toString();
         router.push(`/snacks?${newQuery}`);
