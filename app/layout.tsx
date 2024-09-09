@@ -1,7 +1,6 @@
 import { Container, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
-import type { Metadata } from "next";
 import { Glory } from "next/font/google";
 // import Navbar from "./Navbar";
 import AuthProvider from "./auth/Provider";
@@ -16,11 +15,6 @@ const glory = Glory({
   display: "swap",
   variable: "--font-glory",
 });
-
-export const metadata: Metadata = {
-  title: "Amazing Snack Shop",
-  description: "Welcome to my shop!",
-};
 
 export default function RootLayout({
   children,

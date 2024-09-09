@@ -1,6 +1,7 @@
 import { Grid } from "@radix-ui/themes";
 import FeaturedSnack from "./FeaturedSnack";
 import NewestSnacks from "./NewestSnacks";
+import { Metadata } from "next";
 
 export default function Home() {
   return (
@@ -17,3 +18,9 @@ export default function Home() {
     </>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Amazing Snack Shop - Dashboard",
+  description:
+    "Checkout the newest snacks and the featured snacks our shop has to offer!",
+};

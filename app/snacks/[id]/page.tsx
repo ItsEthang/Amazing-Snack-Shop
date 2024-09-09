@@ -9,6 +9,7 @@ import EditSnackButton from "./EditSnackButton";
 import SnackDetails from "./SnackDetails";
 import SnackImage from "../../components/SnackImage";
 import SnackTitle from "./SnackTitle";
+import { title } from "process";
 
 interface Props {
   params: {
@@ -65,5 +66,16 @@ const SnackDetailsPage = async ({ params }: Props) => {
     </Box>
   );
 };
+
+export async function generateMetadata({ params }: Props) {
+  const snack = await prisma.snack.findUnique({
+    where: { id: +params.id },
+  });
+
+  return {
+    title: snack?.name,
+    description: "Detailed view of " + snack?.name,
+  };
+}
 
 export default SnackDetailsPage;

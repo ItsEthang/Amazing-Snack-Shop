@@ -3,6 +3,7 @@ import { Snack } from "@prisma/client";
 import Pagination from "../components/Pagination";
 import SnackGrid from "./SnackGrid";
 import SnackToolBar from "./SnackToolBar";
+import { Metadata } from "next";
 
 export interface QueryType {
   category: string;
@@ -61,5 +62,11 @@ const SnacksPage = async ({ searchParams }: Props) => {
 };
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Amazing Snack Shop - Snacks",
+  description:
+    "Here is all the snacks of Amazing Snack Shop! You can browse by categories and sort them in different ways!",
+};
 
 export default SnacksPage;
