@@ -36,8 +36,8 @@ const DeleteSnackButton = ({ snackId }: { snackId: number }) => {
         <AlertDialog.Content maxWidth="450px">
           <AlertDialog.Title>Delete Snack</AlertDialog.Title>
           <AlertDialog.Description size="2">
-            Are you sure? This snack will be permanently deleted from Amazing
-            Snack Shop's databse. You cannot undo this action.
+            Are you sure? This snack will be permanently deleted from{" "}
+            {`Amazing Snack Shop's`} databse. You cannot undo this action.
           </AlertDialog.Description>
 
           <Flex gap="3" mt="4" justify="end">

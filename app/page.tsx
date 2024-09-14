@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <>
       <div className="mb-5">
-        Amazing Snack Shop's website is still under construction 🚧 🚧 🚧. Thank
-        you for your patience!
+        {`Amazing Snack Shop's`} website is still under construction 🚧 🚧 🚧.
+        Thank you for your patience!
       </div>
       <NewestSnacks />
       <Grid columns={{ initial: "1", sm: "2" }} gap="5" className="mt-5">

@@ -15,7 +15,7 @@ const OrderList = () => {
   if (cartItems.length === 0) {
     return (
       <Text as="div">
-        You don't have any products in the cart at the moment.{" "}
+        You {`don't`} have any products in the cart at the moment.{" "}
         <Link href="/snacks" className="hover:underline underline-offset-6">
           <Text weight="bold">Continue browsing ?</Text>
         </Link>
