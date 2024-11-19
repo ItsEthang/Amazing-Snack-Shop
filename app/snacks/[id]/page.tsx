@@ -49,7 +49,7 @@ const SnackDetailsPage = async ({ params }: Props) => {
           >
             <SnackImage url={snack.image} alt={snack.name} />
           </Box>
-          {session && (
+          {session && session.user.isAdmin && (
             <Flex justify="between">
               <EditSnackButton snackId={snack.id} />
               <DeleteSnackButton snackId={snack.id} />

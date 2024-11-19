@@ -12,7 +12,7 @@ const SnackToolBar = async ({ query }: { query: QueryType }) => {
     <Flex justify="between" mb="5">
       <CategoryFilter />
       <SortBy />
-      {session && (
+      {session && session.user.isAdmin && (
         <Button>
           <Link href="/snacks/new">Add Snack</Link>
         </Button>

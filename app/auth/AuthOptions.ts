@@ -14,6 +14,22 @@ const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub;
+        session.user.isAdmin = token.isAdmin; // Add other properties as needed
+      }
+      return session;
+    },
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.sub = user.id;
+        token.isAdmin = user.isAdmin; // Add other properties as needed
+      }
+      return token;
+    },
+  },
 };
 
 export default authOptions;
